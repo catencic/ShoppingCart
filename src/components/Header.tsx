@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Badge, Container, Dropdown, FormControl, Nav, Navbar } from "react-bootstrap"
+import { Badge, Button, Container, Dropdown, FormControl, Nav, Navbar } from "react-bootstrap"
 import { AiFillDelete } from "react-icons/ai";
 
 
@@ -63,6 +63,11 @@ export const Header = () => {
                                   </span>
                                 ))
                             }
+                             <Link to="/cart">
+                                <Button style={{ width: "95%", margin: "0 10px" }}>
+                                Go To Cart
+                                </Button>
+                            </Link>
                             </>):
                             (<span style={{ padding: 10}}>Cart is Empty!</span>)
                         }
