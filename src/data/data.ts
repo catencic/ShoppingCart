@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-
+faker.seed(99);
 
 export  const products = [...Array(20)].map(() => ({
     id: faker.datatype.uuid(),
