@@ -8,19 +8,40 @@ import { Filters } from "./Filters";
 export const Home = () => {
 
 
-  const {products , filtersState: {sort}} = useContext(CartContext);
+  const {products , filtersState: {byStock, byFastDelivery , byRating , sort , searchQuery}} = useContext(CartContext);
 
   const transformProduct = ()=>{
-    let sortdProducts = products;
+    let sortedProducts = products;
 
     if(sort){
-      sortdProducts = sortdProducts.sort((a: any ,b: any)=>
+      sortedProducts = sortedProducts.sort((a: any ,b: any)=>
         sort === 'lowToLow' ? a.price - b.price : b.price - a.price
        
       );
     }
 
-    return sortdProducts;
+    if (!byStock) {
+      sortedProducts = sortedProducts.filter((prod) => prod.inStock);
+    }
+
+    if (byFastDelivery) {
+      sortedProducts = sortedProducts.filter((prod) => prod.fastDelivery);
+    }
+
+    if (byRating) {
+      sortedProducts = sortedProducts.filter(
+        (prod) => prod.ratings >= byRating
+      );
+    }
+
+    if (searchQuery) {
+      sortedProducts = sortedProducts.filter((prod) =>
+        prod.name.toLowerCase().includes(searchQuery)
+      ); 
+
+    }
+
+    return sortedProducts;
   }
 
 
