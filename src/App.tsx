@@ -7,23 +7,38 @@ import { CartContext } from './context/cartContext'
 import { products } from './data/data'
 import { useReducer } from 'react'
 import { cartReducer } from './context/cartReducer'
+import { filtersReducer } from './context/filtersReducer'
 
-const initialState = {
+const CartinitialState = {
   products: [],
   cart: [],
 }
 
+const filtersInitialState = {
+  sort: '',
+  byStock: false,
+  byFastDelivery: false,
+  byRating: 0,
+  searchQuery: ''
+
+}
+
 function App() {
 
-      const [cartState, dispatch] = useReducer(cartReducer, initialState);
+      const [cartState, dispatch] = useReducer(cartReducer, CartinitialState);
 
+      const [filtersState, dispatchFilters] = useReducer(filtersReducer, filtersInitialState);
+
+     
   
   return (
     <>
       <CartContext.Provider value={{
         products , 
         cartState , 
-        dispatch
+        filtersState,
+        dispatch,
+        dispatchFilters
          }}>
 
       <AppRouter />

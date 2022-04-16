@@ -8,7 +8,20 @@ import { Filters } from "./Filters";
 export const Home = () => {
 
 
-  const {products} = useContext(CartContext);
+  const {products , filtersState: {sort}} = useContext(CartContext);
+
+  const transformProduct = ()=>{
+    let sortdProducts = products;
+
+    if(sort){
+      sortdProducts = sortdProducts.sort((a: any ,b: any)=>
+        sort === 'lowToLow' ? a.price - b.price : b.price - a.price
+       
+      );
+    }
+
+    return sortdProducts;
+  }
 
 
 
@@ -18,7 +31,7 @@ export const Home = () => {
       <Filters />
       <div className="productContainer">
         {
-          products.map(product =>(
+          transformProduct().map(product =>(
              <SingleProducts product={product} key={product.id}/>
           ))
         }

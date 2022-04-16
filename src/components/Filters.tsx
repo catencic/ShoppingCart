@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useContext } from "react"
 import { Button, Form } from "react-bootstrap"
+import { CartContext } from "../context/cartContext";
+
 import { Rating } from "./Rating";
 
 
 export const Filters = () => {
 
-    const [rate, setRate] = useState(3);
+   
+
+    const {filtersState: {byStock, byFastDelivery , byRating , sort} ,dispatchFilters } = useContext(CartContext);
+    
 
 
   return (
@@ -18,6 +23,11 @@ export const Filters = () => {
         name="group1"
         type="radio"
         id={`inline-1`}
+        onChange={() => dispatchFilters({
+            type: 'sortByPrice',
+            payload: 'lowToHigh'
+        })}
+        checked={sort === 'lowToHigh' ? true : false}
       />
     </span>
     <span>
@@ -27,6 +37,11 @@ export const Filters = () => {
         name="group1"
         type="radio"
         id={`inline-2`}
+        onChange={() => dispatchFilters({
+            type: 'sortByPrice',
+            payload: 'lowToLow'
+        })}
+        checked={sort === 'lowToLow' ? true : false}
       />
     </span>
     <span>
@@ -36,6 +51,10 @@ export const Filters = () => {
         name="group1"
         type="checkbox"
         id={`inline-3`}
+        onChange={() => dispatchFilters({
+            type: 'filterByStock',
+        })}
+        checked={byStock}
       />
     </span>
     <span>
@@ -45,18 +64,28 @@ export const Filters = () => {
         name="group1"
         type="checkbox"
         id={`inline-4`}
+        onChange={() => dispatchFilters({
+            type: 'filterByDelivery',
+        })}
+        checked={byFastDelivery}
         />
     </span>
     <span>
       <label style={{ paddingRight: 10 }}>Rating: </label>
       <Rating
-        rating={rate}
+        rating={byRating}
         style={{ cursor: "pointer" }}
-        onClick={(i)=>setRate(i+1)}
+        onClick={(i)=> dispatchFilters({
+            type: 'filterByRating',
+            payload: i + 1,
+        })}
       />
     </span>
     <Button
       variant="light"
+      onClick={() => dispatchFilters({
+        type: 'clearFilters',
+    })}
     >
       Clear Filters
     </Button>

@@ -10,7 +10,7 @@ import { CartContext } from "../context/cartContext";
 
 export const Header = () => {
 
-    const {cartState: { cart}, dispatch} = useContext(CartContext);
+    const {cartState: { cart}, dispatch , dispatchFilters} = useContext(CartContext);
 
   return (
     <>
@@ -25,6 +25,10 @@ export const Header = () => {
                 }}
                 placeholder="Search"
                 className="m-auto"
+                onChange={(e)=> dispatchFilters({
+                    type: 'filterBySearch',
+                    payload: e.target.value
+                })}
                 />
             </Navbar.Text>
             <Nav>
